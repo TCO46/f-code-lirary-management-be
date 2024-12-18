@@ -2,7 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const { Database } = require("./config/index");
-// import { route } from "./routes/index";
+const { route } = require("./routes/index");
+
+const UserModel = require("./app/models/User");
 
 const app = express();
 const port = 3000;
@@ -20,10 +22,16 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 // route
-app.get("/", (req, res) => {
-	res.redirect("/home");
+app.get("/", (req, res, next) => {
+	// res.redirect("/home");
+    UserModel.find({})
+			.select("username _id ")
+			.then((users) => {
+				res.json(users);
+			})
+			.catch(next);
 });
-// route(app);
+route(app);
 
 // app listen
 app.listen(port, () => {

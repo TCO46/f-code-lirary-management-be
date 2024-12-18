@@ -8,7 +8,7 @@ class Database {
             await mongoose.connect(String(process.env.MONGO_URI))
             console.log("Connected to the mongoDB");
         } catch(err) {
-            console.log("Connect failed")
+            console.log(`Connect failed ${err}`)
         }
     } 
 }
