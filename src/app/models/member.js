@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Member = new Schema(
     {
         fullName: { type: String, required: true },
-        phoneNumber: { type: Number, required: true },
+        phoneNumber: { type: String, required: true },
         active: { type: Boolean, default: true }
     },
     {
