@@ -34,7 +34,7 @@ class BookController {
         await book
             .save()
             .then(() => {
-                res.status(200).json({msg: "Book updated"})
+                res.status(200).json({msg: "Book created"})
             })
             .catch(next)
     }
