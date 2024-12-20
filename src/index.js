@@ -1,3 +1,4 @@
+const cors = require("cors")
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
@@ -8,6 +9,8 @@ const UserModel = require("./app/models/User");
 
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 // connect to database
 const db = new Database();
