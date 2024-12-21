@@ -1,7 +1,4 @@
-const cors = require('cors');
-
-// Enable CORS for all routes
-
+const cors = require("cors")
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");

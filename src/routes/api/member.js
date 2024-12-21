@@ -9,8 +9,8 @@ router.get("/:id", MemberController.getMember)
 
 router.post("/new", MemberController.newMember)
 
-router.put("/update/:id", MemberController.updateMember)
+router.put("/update", MemberController.updateMember)
 
-router.delete("/delete/:id", MemberController.deleteMember)
+router.delete("/delete", MemberController.deleteMember)
 
 module.exports = router;
