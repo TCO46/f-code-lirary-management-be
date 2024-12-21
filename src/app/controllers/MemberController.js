@@ -24,7 +24,12 @@ class MemberController {
     async newMember(req, res, next) {
         if (!req.user) return res.status(401).json({msg: "Unauthorized"});
 
-        if(MemberModel.findOne({ phoneNumber: req.body.phoneNumber })) return res.status(400).json({ msg: "Phone number already exist" })
+        // if(MemberModel.findOne({ phoneNumber: req.body.phoneNumber })) return res.status(400).json({ msg: "Phone number already exist" })
+
+        const existingMember = await MemberModel.findOne({ phoneNumber: req.body.phoneNumber });
+        if (existingMember) {
+            return res.status(400).json({ msg: "Phone number already exist" });
+        }
 
         const member = new MemberModel({
             fullName: req.body.fullName,
