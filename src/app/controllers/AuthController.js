@@ -14,11 +14,14 @@ class AuthController {
                 const token = jwt.sign({ username: User.username, id: User._id }, String(process.env.ACCESS_TOKEN_SECRET), {
                     expiresIn: "1d"
                 });
+
+                
                 const refreshToken = jwt.sign(
 					{ username: User.username, id: User._id },
 					String(process.env.REFRESH_TOKEN_SECRET),
 					{ expiresIn: "7d" },                
                 )
+
 
                 return res.status(200).json({ status: "Logged in", token: token, refreshToken: refreshToken, user: User });
             }
