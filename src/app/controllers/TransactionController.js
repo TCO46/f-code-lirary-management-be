@@ -53,29 +53,51 @@ class TransactionController {
         var timestamp = new Date().getTime() + (30 * 24 * 60 * 60 * 1000) //30 days timestamp
 
         const phoneNumber = req.body.phoneNumber
-        const member = MemberModel.findOne({ phoneNumber: phoneNumber })
+        // const member = MemberModel.findOne({ phoneNumber: phoneNumber })
+        const member = await MemberModel.findOne({ phoneNumber: phoneNumber });
         const transactionId = req.params.id
         const returnDate = new Date()
 
+        
         if (!req.user) return res.status(401).json({msg: "Unauthorized"});
-
+        
         if (!phoneNumber) return res.status(400).json({msg: "Missing phone number"});
-
+        
         if (!member) return res.status(404).json({msg: "This member does not exist"});
+        
+        // const updateReturnTransaction = await TransactionModel.findByIdAndUpdate(
+        //     transactionId,
+        //     {
+        //         $set: {
+        //             returnDate: returnDate,
+        //             status: "Returned"
+        //         }
+        //     },
+        //     { new: true }
+        // ).then(() => {
+        //     res.status(200).json({msg: "Transaction updated", updateReturnTransaction})
+        // }).catch(next)
 
-        const updateReturnTransaction = await TransactionModel.findByIdAndUpdate(
-            transactionId,
-            {
-                $set: {
-                    returnDate: returnDate,
-                    status: "Returned"
-                }
-            },
-            { new: true }
-        ).then(() => {
-            res.status(200).json({msg: "Transaction updated", updateReturnTransaction})
-        }).catch(next)
-
+        try {
+            const updateReturnTransaction = await TransactionModel.findByIdAndUpdate(
+                transactionId,
+                {
+                    $set: {
+                        returnDate: returnDate,
+                        status: "Returned"
+                    }
+                },
+                { new: true }
+            );
+        
+            // Trả về thông báo thành công cùng với giao dịch đã được cập nhật
+            res.status(200).json({ msg: "Transaction updated", updateReturnTransaction });
+        } catch (err) {
+            // Xử lý lỗi nếu có và chuyển lỗi cho middleware
+            next(err);
+        }
+        
+        
     }
 }
 
