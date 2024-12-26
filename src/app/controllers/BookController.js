@@ -9,12 +9,31 @@ class BookController {
         .catch(next)
     }
 
+    async searchBook(req, res, next) {
+        try {
+            const { title, author } = req.query;
+
+            const searchQuery = {};
+            if (title) searchQuery.title = { $regex: new RegExp(title, 'i') };
+            if (author) searchQuery.author = { $regex: new RegExp(author, 'i') };
+
+            const books = await BookModel.find(searchQuery);
+            res.status(200).json({ books })
+
+        } catch(err) {
+            res.status(500).json({ message: 'Error searching for books', error: err.message });
+        }
+    }
+
     async getBook(req, res, next) {
-        await BookModel.findOne({ _id: req.params.id })
-        .then((book) => {
-            res.status(200).json(book)
-        })
-        .catch(next)
+        try {
+            const book = BookModel.findOne({ _id: req.params.id })
+
+            res.status(200).json({ book })
+        } catch(err) {
+            res.status(500).json({ message: 'Error get book with ID', error: err.message });
+        }
+
     }
 
     async newBook(req, res, next) {

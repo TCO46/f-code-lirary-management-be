@@ -17,7 +17,7 @@ class AuthController {
                 const refreshToken = jwt.sign(
 					{ username: User.username, id: User._id },
 					String(process.env.REFRESH_TOKEN_SECRET),
-					{ expiresIn: "7d" },                
+					{ expiresIn: "7d" },
                 )
 
                 return res.status(200).json({ status: "Logged in", token: token, refreshToken: refreshToken, user: User });
@@ -29,7 +29,7 @@ class AuthController {
             next(err)
         }
     }
-
+    
     getUser(req, res, next) {
 		const authHeader = req.headers["authorization"];
 		const token = authHeader && authHeader.split(" ")[1];
