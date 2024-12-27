@@ -26,13 +26,7 @@ app.use(morgan("dev"));
 
 // route
 app.get("/", (req, res, next) => {
-	// res.redirect("/home");
-    UserModel.find({})
-			.select("username _id ")
-			.then((users) => {
-				res.json(users);
-			})
-			.catch(next);
+	res.json({ msg: "Home" });
 });
 route(app);
 

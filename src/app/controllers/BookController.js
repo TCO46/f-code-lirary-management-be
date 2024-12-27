@@ -27,7 +27,7 @@ class BookController {
 
     async getBook(req, res, next) {
         try {
-            const book = BookModel.findOne({ _id: req.params.id })
+            const book = await BookModel.findOne({ _id: req.params.id })
 
             res.status(200).json({ book })
         } catch(err) {
