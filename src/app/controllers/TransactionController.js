@@ -6,6 +6,8 @@ class TransactionController {
         if (!req.user) return res.status(401).json({msg: "Unauthorized"});
 
         await TransactionModel.find({})
+        .populate("bookId", "title")
+        .populate("memberId")
         .then((transactions) => {
             res.status(200).json(transactions)
         })
