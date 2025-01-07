@@ -16,6 +16,8 @@ function route(app) {
 	app.use("/api/member", memberRouter)
 
 	app.use("/api/transaction", transactionRouter)
+	
+	app.use("/api/user", userRouter)
 }
 
 module.exports = { route }
